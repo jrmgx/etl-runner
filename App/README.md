@@ -1,8 +1,27 @@
-composer dump-autoload --classmap-authoritative
+# Technical Documentation
 
-TODO
-cleanup code
-implement mapping and expression language
-json in => csv out
-use https://symfony.com/doc/current/components/options_resolver.html instead of config stuff
-https://symfony.com/doc/current/components/expression_language.html
+## Implement Custom Extractors
+
+...
+
+## Implement Custom Transformers
+
+...
+
+## Implement Custom Loaders
+
+...
+
+# Development Environment 
+
+## Install the project
+
+...
+
+## Run the project
+
+...
+
+## Tests and code style
+
+...
