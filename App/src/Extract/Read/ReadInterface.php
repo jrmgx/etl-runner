@@ -2,6 +2,8 @@
 
 namespace Jrmgx\Etl\Extract\Read;
 
+use Jrmgx\Etl\Config\ReadConfig;
+
 interface ReadInterface
 {
     /**

@@ -2,6 +2,8 @@
 
 namespace Jrmgx\Etl\Transform;
 
+use Jrmgx\Etl\Config\TransformConfig;
+
 interface TransformInterface
 {
     /**

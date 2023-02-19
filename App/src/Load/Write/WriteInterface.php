@@ -2,6 +2,8 @@
 
 namespace Jrmgx\Etl\Load\Write;
 
+use Jrmgx\Etl\Config\WriteConfig;
+
 interface WriteInterface
 {
     /**

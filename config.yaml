@@ -1,4 +1,5 @@
 extract:
+# For now we don't have short version of those
 #    pull: /data_in.csv
     pull:
         type: https | ftp | git | file
@@ -12,6 +13,7 @@ extract:
         options:
             separator: ","
 
+# This can be left empty, even removed: it means "identity"
 transform:
 #    mapping: identity
     mapping:
@@ -21,8 +23,11 @@ transform:
         in.z: out.z
 
 load:
-    write: csv | xml | json
-#    push: /data_out.xml
+#    write: csv | xml | json
+    write:
+        format: csv | xml | json
+
+    #    push: /data_out.xml
     push:
         type: https | git | ...
         uri: gitlab.com/my-project
