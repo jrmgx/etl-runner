@@ -23,10 +23,10 @@ transform:
 #    mapping: identity
     type: simple
     mapping:
-        out.x.y: in.x.y
-        out.z: in.z -or-
-        in.x.y: out.x.y
-        in.z: out.z
+        in.Name: out.name
+        in.Sex: out.sex
+        in.Age: out.years_count
+        "in.Height (in)": out.height
 
 load:
 #    write: csv | xml | json
