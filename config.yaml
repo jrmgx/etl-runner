@@ -20,13 +20,18 @@ extract:
 
 # This can be left empty, even removed: it means "identity"
 transform:
-#    mapping: identity
-    type: simple
+#    type: simple
+#    mapping:
+#        out.name: in.Name
+#        out.sex: in.Sex
+#        out.years_count: in.Age
+#        out.height: "in.Height (in)"
+    type: expressive
     mapping:
-        in.Name: out.name
-        in.Sex: out.sex
-        in.Age: out.years_count
-        "in.Height (in)": out.height
+        out.name: in.Name
+        out.sex: in.Sex
+        out.years_count: 'in.Age * 100'
+        # out.height: 'in.Height (in)'
 
 load:
 #    write: csv | xml | json
