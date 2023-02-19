@@ -1,0 +1,18 @@
+stages:
+  - run
+
+run-job:
+  stage: run
+  image: php:8.1-cli-alpine
+  when: manual
+  cache:
+    paths:
+      - App/vendor
+    key:
+      files:
+        - App/composer.lock
+  script:
+    - cd App
+    - php composer.phar install
+    - php bin/console etl:run
+    - cat ../data_out.json
