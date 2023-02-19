@@ -1,0 +1,16 @@
+parameters:
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    Jrmgx\EtlRunner\:
+        resource: '../src/'
+        exclude:
+            - '../src/Kernel.php'
+
+    Jrmgx\Etl\:
+        resource: '../vendor/jrmgx/etl-package/src/'
+        exclude:
+            - '../vendor/jrmgx/etl-package/src/Config/'

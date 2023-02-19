@@ -1,0 +1,24 @@
+extract:
+  pull:
+    type: file
+    uri: ./demo/data_in.csv
+  read:
+    format: csv
+    options:
+      trim: true
+
+transform:
+  type: expressive
+  mapping:
+    out.name: in.Name
+    out.sex: in.Sex
+    out.age_in_sec: 'in.Age * 365 * 24 * 60 * 60'
+
+load:
+  write:
+    format: twig
+    options:
+      template: ./demo/document_template.html.twig
+  push:
+    type: file
+    uri: ./demo/document_out.html

@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>My Document</title>
+</head>
+<body>
+    <h1>List of People</h1>
+    <section>
+    {% for out in output %}
+        <div>
+            This person is: {{ out.name }}<br>
+            Their gender is: {{ out.sex }}<br>
+            Age in seconds: {{ out.age_in_sec }}
+        </div>
+    {% endfor %}
+    </section>
+</body>
+</html>
