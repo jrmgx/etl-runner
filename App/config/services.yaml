@@ -1,6 +1,22 @@
 parameters:
 
 services:
+    _instanceof:
+        Jrmgx\Etl\Extract\Pull\PullInterface:
+            tags: [ 'extract.pull' ]
+
+        Jrmgx\Etl\Extract\Read\ReadInterface:
+            tags: [ 'extract.read' ]
+
+        Jrmgx\Etl\Transform\TransformInterface:
+            tags: [ 'transform.mapping' ]
+
+        Jrmgx\Etl\Load\Write\WriteInterface:
+            tags: [ 'load.write' ]
+
+        Jrmgx\Etl\Load\Push\PushInterface:
+            tags: [ 'load.push' ]
+
     _defaults:
         autowire: true
         autoconfigure: true
@@ -13,3 +29,11 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    Jrmgx\Etl\Run:
+        arguments:
+            $pullServices: !tagged_locator { tag: 'extract.pull' }
+            $readServices: !tagged_locator { tag: 'extract.read' }
+            $transformServices: !tagged_locator { tag: 'transform.mapping' }
+            $writeServices: !tagged_locator { tag: 'load.write' }
+            $pushServices: !tagged_locator { tag: 'load.push' }

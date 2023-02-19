@@ -2,7 +2,7 @@
 
 namespace Jrmgx\Etl\Transform;
 
-use Jrmgx\Etl\Config\TransformConfig;
+use Jrmgx\Etl\Config\MappingConfig;
 
 interface TransformInterface
 {
@@ -10,5 +10,5 @@ interface TransformInterface
      * @param array<mixed> $data
      * @return array<mixed>
      */
-    public function map(array $data, TransformConfig $config): array;
+    public function map(array $data, MappingConfig $config): array;
 }

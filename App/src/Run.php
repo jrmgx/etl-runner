@@ -2,11 +2,12 @@
 
 namespace Jrmgx\Etl;
 
-use Jrmgx\Etl\Config\MappingConfig;
-use Jrmgx\Etl\Config\PullConfig;
-use Jrmgx\Etl\Config\PushConfig;
-use Jrmgx\Etl\Config\ReadConfig;
-use Jrmgx\Etl\Config\WriteConfig;
+use Jrmgx\Etl\Config\Config;
+use Jrmgx\Etl\Extract\Pull\PullInterface;
+use Jrmgx\Etl\Extract\Read\ReadInterface;
+use Jrmgx\Etl\Load\Push\PushInterface;
+use Jrmgx\Etl\Load\Write\WriteInterface;
+use Jrmgx\Etl\Transform\TransformInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -15,6 +16,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Yaml\Yaml;
+use Symfony\Contracts\Service\ServiceProviderInterface;
 
 #[AsCommand(
     name: 'etl:run',
@@ -23,7 +25,11 @@ use Symfony\Component\Yaml\Yaml;
 class Run extends Command
 {
     public function __construct(
-
+        private readonly ServiceProviderInterface $pullServices,
+        private readonly ServiceProviderInterface $readServices,
+        private readonly ServiceProviderInterface $transformServices,
+        private readonly ServiceProviderInterface $writeServices,
+        private readonly ServiceProviderInterface $pushServices,
     ) {
         parent::__construct();
     }
@@ -39,35 +45,46 @@ class Run extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $configs = Yaml::parseFile(__DIR__.'/../../config.yaml');
+        $config = new Config($configs);
 
-        $configExtractPull = new PullConfig($configs['extract']['pull']);
-        $configExtractRead = new ReadConfig($configs['extract']['read']);
-        $configMapping = new MappingConfig($configs['transform']['mapping'] ?? []);
-        $configLoadPush = new PushConfig($configs['load']['push']);
-        $configLoadWrite = new WriteConfig($configs['load']['write']);
+        $extractPullType = $config->getPullConfig()->getType();
+        /** @var PullInterface $extractPullService */
+        $extractPullService = $this->pullServices->get($extractPullType);
+        $readResource = $extractPullService->pull($config->getPullConfig());
 
-        dump(
-            $configExtractPull,
-            $configExtractRead,
-            $configMapping,
-            $configLoadPush,
-            $configLoadWrite,
-        );
+        $extractReadFormat = $config->getReadConfig()->getFormat();
+        /** @var ReadInterface $extractReadService */
+        $extractReadService = $this->readServices->get($extractReadFormat);
+        $read = $extractReadService->read($readResource, $config->getReadConfig());
 
-        $io = new SymfonyStyle($input, $output);
-        $arg1 = $input->getArgument('arg1');
+        // TODO allow custom types
+        $mappingType = $config->getMappingConfig()->getType();
+        /** @var TransformInterface $mappingService */
+        $mappingService = $this->transformServices->get($mappingType);
+        $mapped = $mappingService->map($read, $config->getMappingConfig());
 
-        if ($arg1) {
-            $io->note(sprintf('You passed an argument: %s', $arg1));
-        }
+        $loadWriteFormat = $config->getWriteConfig()->getFormat();
+        /** @var WriteInterface $loadWriteService */
+        $loadWriteService = $this->writeServices->get($loadWriteFormat);
+        $writeResource = $loadWriteService->write($mapped, $config->getWriteConfig());
 
-        if ($input->getOption('option1')) {
-            // ...
-        }
+        $loadPushType = $config->getPushConfig()->getType();
+        /** @var PushInterface $loadPushService */
+        $loadPushService = $this->pushServices->get($loadPushType);
+        $loadPushService->push($writeResource, $config->getPushConfig());
 
-
-
-        $io->success('You have a new command! Now make it your own! Pass --help to see your options.');
+//        $io = new SymfonyStyle($input, $output);
+//        $arg1 = $input->getArgument('arg1');
+//
+//        if ($arg1) {
+//            $io->note(sprintf('You passed an argument: %s', $arg1));
+//        }
+//
+//        if ($input->getOption('option1')) {
+//            // ...
+//        }
+//
+//        $io->success('You have a new command! Now make it your own! Pass --help to see your options.');
 
         return Command::SUCCESS;
     }
