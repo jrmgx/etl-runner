@@ -1,0 +1,31 @@
+extract:
+#    pull: /data_in.csv
+    pull:
+        type: https | ftp | git | file
+        uri: https://example.com/file.xml
+        options:
+            http_option_x: value
+            http_option_y: value
+#    read: csv | xml | json
+    read:
+        format: csv
+        options:
+            separator: ","
+
+transform:
+#    mapping: identity
+    mapping:
+        out.x.y: in.x.y
+        out.z: in.z -or-
+        in.x.y: out.x.y
+        in.z: out.z
+
+load:
+    write: csv | xml | json
+#    push: /data_out.xml
+    push:
+        type: https | git | ...
+        uri: gitlab.com/my-project
+        options:
+            username: git
+            password: xxx

@@ -1,0 +1,45 @@
+{
+    "name": "jrmgx/etl",
+    "license": "MIT",
+    "type": "project",
+    "description": "TODO",
+    "authors": [
+        {
+            "name": "Jerome Gx",
+            "email": "jerome@gangneux.net"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "symfony/console": "^6.2",
+        "symfony/yaml": "^6.2",
+        "symfony/flex": "^2.2",
+        "symfony/runtime": "^6.2",
+        "symfony/http-kernel": "^6.2",
+        "symfony/framework-bundle": "^6.2",
+        "symfony/dependency-injection": "^6.2"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^10.0",
+        "phpstan/phpstan": "^1.9",
+        "friendsofphp/php-cs-fixer": "^3.14",
+        "symfony/maker-bundle": "^1.48"
+    },
+    "autoload": {
+        "psr-4": {
+            "Jrmgx\\Etl\\": "src/"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "symfony/flex": true,
+            "symfony/runtime": true
+        }
+    },
+    "scripts": {
+        "auto-scripts": {
+            "cache:clear": "symfony-cmd",
+            "assets:install %PUBLIC_DIR%": "symfony-cmd"
+        }
+    }
+}
