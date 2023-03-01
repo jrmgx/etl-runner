@@ -24,7 +24,7 @@ class Run extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         // Yaml is optional, you can provide a basic array instead
-        $configFile = Yaml::parseFile(__DIR__.'/../../config.yaml');
+        $configFile = Yaml::parseFile(__DIR__ . '/../../config.yaml');
         $config = new Config($configFile, __DIR__ . '/../../');
 
         $this->etl->execute($config);

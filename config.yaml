@@ -6,19 +6,29 @@ extract:
     format: csv
     options:
       trim: true
+      with_header: ["Name", "Sex", "Age", "Height", "Weight"]
 
 transform:
-  type: expressive
+  filter:
+    type: query
+    options:
+      where: 'Age > :min'
+      parameters:
+        min: 30
   mapping:
-    out.name: in.Name
-    out.sex: in.Sex
-    out.age_in_sec: 'in.Age * 365 * 24 * 60 * 60'
+    type: expressive
+    map:
+      out.name: in.Name
+      out.sex: in.Sex
+      out.age_in_sec: 'in.Age * 365 * 24 * 60 * 60'
 
 load:
   write:
-    format: twig
-    options:
-      template: ./demo/document_template.html.twig
+    format: json
   push:
-    type: file
-    uri: ./demo/document_out.html
+    type: http
+    # Request are posted here: https://webhook.site/#!/f24c112b-8344-4fe3-a9e5-53baf36c912f
+    uri: https://webhook.site/f24c112b-8344-4fe3-a9e5-53baf36c912f
+    options:
+      headers:
+        'Authorization': 'Basic 9e222b3b7647c7'

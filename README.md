@@ -39,20 +39,29 @@ extract:
     format: csv
     options:
       trim: true
+      with_header: ["Name", "Sex", "Age", "Height", "Weight"]
 
 transform:
-  type: expressive
+  filter:
+    type: query
+    options:
+      where: 'Age > :min'
+      parameters:
+        min: 30
   mapping:
-    out.name: in.Name
-    out.sex: in.Sex
-    out.age_in_sec: 'in.Age * 365 * 24 * 60 * 60'
+    type: expressive
+    map:
+      out.name: in.Name
+      out.sex: in.Sex
+      out.age_in_sec: 'in.Age * 365 * 24 * 60 * 60'
 
 load:
   write:
     format: json
   push:
     type: http
-    uri: https://example.org/api/customer
+    # Request are posted here: https://webhook.site/#!/f24c112b-8344-4fe3-a9e5-53baf36c912f
+    uri: https://webhook.site/f24c112b-8344-4fe3-a9e5-53baf36c912f
     options:
       headers:
         'Authorization': 'Basic 9e222b3b7647c7'
@@ -63,10 +72,7 @@ load:
 On the ETL part, everything is configured into one single file that describe each steps: `config.yaml`.  
 But for the sake of simplicity, the documentation has been split into multiple sections.
 
-- [HTTP and API](documentation/http.md)
-- [Database](documentation/database.md)
-- [File (local and distant)](documentation/file.md)
-- [Templates (Twig)](documentation/twig.md)
+Please refer to the underlying package: [documentation](https://github.com/jrmgx/etl-package/tree/main/documentation)
 
 ## Triggering runs
 
