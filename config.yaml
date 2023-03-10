@@ -27,8 +27,10 @@ load:
     format: json
   push:
     type: http
-    # Request are posted here: https://webhook.site/#!/f24c112b-8344-4fe3-a9e5-53baf36c912f
-    uri: https://webhook.site/f24c112b-8344-4fe3-a9e5-53baf36c912f
+    # By using transfer.sh you can even retrieve or share the resulting file
+    uri: https://transfer.sh/my-file.json
     options:
+      method: PUT
       headers:
-        'Authorization': 'Basic 9e222b3b7647c7'
+        - 'Max-Downloads: 1'
+        - 'Max-Days: 5'
