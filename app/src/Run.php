@@ -27,7 +27,11 @@ class Run extends Command
         $configFile = Yaml::parseFile(__DIR__ . '/../../config.yaml');
         $config = new Config($configFile, __DIR__ . '/../../');
 
-        $this->etl->execute($config);
+        $return = $this->etl->execute($config);
+
+        if ($return !== null) {
+            $output->writeln($return);
+        }
 
         return Command::SUCCESS;
     }

@@ -1,6 +1,6 @@
 # No code self-runnable micro ETL
 
-**THIS IS A PROOF OF CONCEPT AND WORK IN PROGRESS**
+_THIS IS A PROOF OF CONCEPT AND WORK IN PROGRESS_
 
 [ETL: Extract, Transform, Load](https://en.wikipedia.org/wiki/Extract,_transform,_load)
 
@@ -72,11 +72,10 @@ load:
 On the ETL part, everything is configured into one single file that describe each steps: `config.yaml`.  
 But for the sake of simplicity, the documentation has been split into multiple sections.
 
-Please refer to the underlying package: [documentation](https://github.com/jrmgx/etl-package/tree/main/documentation)
+Please refer to the documentation of the underlying package: 
+[ETL Package](https://github.com/jrmgx/etl-package/blob/main/README.md)
 
 ## Triggering runs
-
-The following documentation is provider specific and partially out of the scope of this project.
 
 - [GitLab](documentation/trigger_gitlab.md)
 - [GitHub](documentation/trigger_github.md)
@@ -85,22 +84,13 @@ The following documentation is provider specific and partially out of the scope 
 
 Before diving into handling secrets, you probably can start by running this project on a private repository.
 
-The following documentation is provider specific and partially out of the scope of this project.
-
 - [GitLab](documentation/secret_gitlab.md)
 - [GitHub](documentation/secret_github.md)
 
 ## Commit back to the repository
 
-The following documentation is provider specific and partially out of the scope of this project.
-
 - [GitLab](documentation/commit_back_gitlab.md)
 - [GitHub](documentation/commit_back_github.md)
-
-## [Technical documentation](app/README.md)
-
-...
-
 
 ## Licence
 
